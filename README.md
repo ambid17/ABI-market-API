@@ -8,3 +8,5 @@
   - dotnet ef database update
 - The tables will now exist in your database
 	- if you get an error about Microsoft.EntityFrameworkCore.Design, install the package in Nuget, and rebuild the project
+- to insert into Postgres, it doesn't like capitalized names:
+	- insert into "ItemCategories"("Name") values('Helmet')
