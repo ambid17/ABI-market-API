@@ -5,4 +5,6 @@
 		- ALTER USER postgres WITH PASSWORD 'password';
 - Run the following commands in the Package Manager Console:
   - dotnet ef migrations add InitialCreate
-  - Update-Database
+  - dotnet ef database update
+- The tables will now exist in your database
+	- if you get an error about Microsoft.EntityFrameworkCore.Design, install the package in Nuget, and rebuild the project
