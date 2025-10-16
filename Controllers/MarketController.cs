@@ -21,7 +21,7 @@ namespace abi_market.Controllers
         [Route("getCategories")]
         public async Task<IEnumerable<ItemCategory>> GetItemCategories()
         {
-            return await _marketContext.ItemCategories.ToListAsync();
+            return await _marketContext.ItemCategories.Include(i => i.ItemSubcategories).ToListAsync();
         }
 
         [HttpGet]
