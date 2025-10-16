@@ -49,9 +49,6 @@ namespace abi_market.Controllers
         [Route("addPrice")]
         public async Task AddItemPrice(int itemId, decimal price)
         {
-            var itemToUpdate = await _marketContext.Items.SingleAsync(item => item.Id == itemId);
-            itemToUpdate.Price = price;
-
             var newItemPrice = new ItemPrice
             {
                 ItemId = itemId,
