@@ -38,3 +38,15 @@
 		- psql
 		- list tables
 			- \l
+- set environment variables for your connection string
+	- export ConnectionStrings__MarketContext="Host=localhost;Database=AbiMarket;Username=postgres;Password=password"
+	- check that it worked with:
+		- printenv | grep ConnectionStrings
+- i then realized this was a massive pain and decided to host on Azure instead
+
+
+# Azure setup
+- create an Azure account if you don't have one
+- following these guides to set up a web app with a PostgreSQL database:
+	- https://learn.microsoft.com/en-us/visualstudio/azure/end-to-end-deployment-entity-framework-core-github-actions?view=vs-2022#create-the-azure-sql-database
+	- https://github.com/Azure-Samples/app-templates-dotnet-azuresql-appservice
