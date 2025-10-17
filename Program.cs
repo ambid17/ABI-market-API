@@ -31,7 +31,11 @@ namespace abi_market
 
             var app = builder.Build();
             app.UseHttpsRedirection();
-            app.UseCors(MyAllowSpecificOrigins);
+            app.UseCors(builder => builder
+                        .WithOrigins("http://localhost:3000",
+                                    "https://localhost:3000")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
             app.UseAuthorization();
             app.MapControllers();
             app.UseSwagger();

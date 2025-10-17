@@ -25,17 +25,10 @@ namespace abi_market.Controllers
         }
 
         [HttpGet]
-        [Route("getSubcategories")]
-        public async Task<IEnumerable<ItemSubcategory>> GetItemSubcategories(int categoryId)
+        [Route("getItems")]
+        public async Task<IEnumerable<Item>> GetItems()
         {
-            return await _marketContext.ItemSubcategories.Where(s => s.ItemCategoryId == categoryId).ToListAsync();
-        }
-
-        [HttpGet]
-        [Route("itemsInSubcategory")]
-        public async Task<IEnumerable<Item>> GetItemsInSubcategory(int subcategoryId)
-        {
-            return await _marketContext.Items.Where(s => s.ItemSubcategoryId == subcategoryId).ToListAsync();
+            return await _marketContext.Items.ToListAsync();
         }
 
         [HttpGet]
@@ -43,6 +36,18 @@ namespace abi_market.Controllers
         public async Task<Item> GetItemById(int itemId)
         {
             return await _marketContext.Items.FirstOrDefaultAsync(item => item.Id == itemId) ?? new Item();
+        }
+        [HttpPost]
+        [Route("addItem")]
+        public async Task AddItem(Item item)
+        {
+            var existingItem = _marketContext.Items.FirstOrDefault(existing => existing.Name == item.Name);
+            if(existingItem != null)
+            {
+                return;
+            }
+            _marketContext.Items.Add(item);
+            await _marketContext.SaveChangesAsync();
         }
 
         [HttpPost]
