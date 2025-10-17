@@ -10,3 +10,31 @@
 	- if you get an error about Microsoft.EntityFrameworkCore.Design, install the package in Nuget, and rebuild the project
 - to insert into Postgres, it doesn't like capitalized names:
 	- insert into "ItemCategories"("Name") values('Helmet')
+
+
+# Digital Ocean setup
+- create a basic droplet with Ubuntu
+- ssh into the droplet
+	- ssh root@your_droplet_ip
+	- enter password
+- install .NET SDK on the droplet
+	- follow instructions here: https://docs.microsoft.com/en-us/dotnet/core/install/linux-ubuntu
+	- check installation with:
+		- dotnet --version
+- install git on the droplet
+	- sudo apt-get install git
+	- check installation with:
+		- git --version
+- clone your repository
+	- git clone your_repo_url
+- build your project
+	- cd your_project_folder
+	- dotnet build
+- install postgresql on the droplet
+	- sudo apt-get install postgresql
+	- switch to the postgres user
+		- sudo su postgres
+	- enter the psql shell
+		- psql
+		- list tables
+			- \l

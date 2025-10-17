@@ -30,7 +30,8 @@ namespace abi_market
             });
 
             var app = builder.Build();
-            app.UseHttpsRedirection();
+            // Handled via NGINX
+            //app.UseHttpsRedirection();
             app.UseCors(builder => builder
                         .WithOrigins("http://localhost:3000",
                                     "https://localhost:3000")
