@@ -32,16 +32,19 @@ namespace abi_market.Controllers
         }
 
         [HttpGet]
-        [Route("item")]
+        [Route("item/{itemId}")]
         public async Task<Item> GetItemById(int itemId)
         {
-            return await _marketContext.Items.FirstOrDefaultAsync(item => item.Id == itemId) ?? new Item();
+            return await _marketContext.Items
+                .Include(i => i.ItemPrices)
+                .FirstOrDefaultAsync(item => item.Id == itemId)
+                ?? new Item();
         }
         [HttpPost]
         [Route("addItem")]
         public async Task AddItem(Item item)
         {
-            var existingItem = _marketContext.Items.FirstOrDefault(existing => existing.Name == item.Name);
+            var existingItem = await _marketContext.Items.FirstOrDefaultAsync(existing => existing.Name == item.Name);
             if(existingItem != null)
             {
                 return;
@@ -52,15 +55,14 @@ namespace abi_market.Controllers
 
         [HttpPost]
         [Route("addPrice")]
-        public async Task AddItemPrice(int itemId, decimal price)
+        public async Task AddItemPrice([FromBody] ItemPrice itemPrice)
         {
-            var newItemPrice = new ItemPrice
+            var existingItem = await _marketContext.Items.FirstOrDefaultAsync(i => i.Id == itemPrice.ItemId);
+            if(existingItem == null || itemPrice.Price <= 0)
             {
-                ItemId = itemId,
-                Price = price,
-                Date = DateTime.Now
-            };
-            _marketContext.ItemPrices.Add(newItemPrice);
+                return;
+            }
+            _marketContext.ItemPrices.Add(itemPrice);
             await _marketContext.SaveChangesAsync();
         }
     }
