@@ -62,7 +62,21 @@ namespace abi_market.Controllers
             {
                 return;
             }
+            itemPrice.Date = DateTime.UtcNow;
             _marketContext.ItemPrices.Add(itemPrice);
+            await _marketContext.SaveChangesAsync();
+        }
+
+        [HttpPost]
+        [Route("deletePrice/{itemPriceId}")]
+        public async Task DeleteItemPrice(int itemPriceId)
+        {
+            var existingItem = await _marketContext.ItemPrices.FirstOrDefaultAsync(i => i.Id == itemPriceId);
+            if (existingItem == null)
+            {
+                return;
+            }
+            _marketContext.ItemPrices.Remove(existingItem);
             await _marketContext.SaveChangesAsync();
         }
     }
